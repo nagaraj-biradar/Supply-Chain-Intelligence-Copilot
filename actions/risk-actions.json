@@ -1,0 +1,268 @@
+{
+  "actions": [
+    {
+      "id": "assess-supply-chain-risk",
+      "name": "Assess Supply Chain Risk",
+      "description": "Comprehensive supply chain risk assessment",
+      "category": "risk",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "riskCategories",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "default": [
+            "supplier",
+            "demand",
+            "supply",
+            "logistics",
+            "compliance",
+            "geopolitical"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "riskAssessment",
+          "type": "object",
+          "properties": {
+            "assessmentDate": "date",
+            "overallRiskScore": "number",
+            "risksByCategory": "array",
+            "criticalRisks": "array",
+            "exposures": "array",
+            "recommendations": "array",
+            "mitigationPlan": "object"
+          }
+        }
+      ],
+      "dataSourceRequired": ["erp", "external-data", "news-feed"],
+      "mlModelRequired": "risk-assessment-v1",
+      "responseTime": "< 5 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "identify-supply-disruption-risk",
+      "name": "Identify Supply Disruption Risk",
+      "description": "Identify potential supply disruptions and their impact",
+      "category": "risk",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "riskFocus",
+          "type": "string",
+          "required": false,
+          "enum": [
+            "geopolitical",
+            "weather",
+            "financial",
+            "quality",
+            "regulatory"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "disruptionRisks",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "riskId": "string",
+              "description": "string",
+              "likelihood": "number",
+              "impact": "number",
+              "affectedSuppliers": "array",
+              "affectedProducts": "array",
+              "timeframe": "string",
+              "mitigationOptions": "array"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": [
+        "erp",
+        "weather-api",
+        "news-api",
+        "geopolitical-data"
+      ],
+      "responseTime": "< 4 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "evaluate-supplier-financial-risk",
+      "name": "Evaluate Supplier Financial Risk",
+      "description": "Assess financial stability and credit risk of suppliers",
+      "category": "risk",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "suppliers",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "description": "Supplier IDs (empty = all)"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "financialRisks",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "supplierId": "string",
+              "creditScore": "number",
+              "riskLevel": "string",
+              "financialMetrics": "object",
+              "redFlags": "array",
+              "trends": "array",
+              "recommendation": "string"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": ["financial-data-provider", "erp"],
+      "mlModelRequired": "financial-risk-v1",
+      "responseTime": "< 3 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "predict-quality-issues",
+      "name": "Predict Quality Issues",
+      "description": "Predict potential quality issues from suppliers",
+      "category": "risk",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "supplier",
+          "type": "string",
+          "required": false,
+          "description": "Supplier ID (empty = all)"
+        },
+        {
+          "name": "riskThreshold",
+          "type": "number",
+          "required": false,
+          "default": 0.3,
+          "min": 0.1,
+          "max": 0.9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "qualityRisks",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "supplierId": "string",
+              "productSku": "string",
+              "riskProbability": "number",
+              "riskType": "string",
+              "historicalIssues": "array",
+              "mitigationActions": "array",
+              "urgency": "string"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": ["quality-management-system", "erp"],
+      "mlModelRequired": "quality-risk-v1",
+      "responseTime": "< 3 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "regulatory-compliance-check",
+      "name": "Regulatory Compliance Check",
+      "description": "Assess regulatory compliance risks and requirements",
+      "category": "risk",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "regions",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "description": "Geographic regions to assess"
+        },
+        {
+          "name": "industries",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "description": "Industry-specific compliance areas"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "complianceStatus",
+          "type": "object",
+          "properties": {
+            "overallStatus": "string",
+            "complianceAreas": "array",
+            "gaps": "array",
+            "upcomingChanges": "array",
+            "recommendations": "array",
+            "auditReadiness": "number"
+          }
+        }
+      ],
+      "dataSourceRequired": [
+        "compliance-management-system",
+        "regulatory-database"
+      ],
+      "responseTime": "< 4 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "create-risk-mitigation-plan",
+      "name": "Create Risk Mitigation Plan",
+      "description": "Develop actionable risk mitigation strategy",
+      "category": "risk",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "riskId",
+          "type": "string",
+          "required": true,
+          "description": "Risk identifier"
+        },
+        {
+          "name": "stakeholders",
+          "type": "array",
+          "required": false,
+          "items": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mitigationPlan",
+          "type": "object",
+          "properties": {
+            "planId": "string",
+            "riskId": "string",
+            "riskDescription": "string",
+            "currentState": "object",
+            "targetState": "object",
+            "actions": "array",
+            "timeline": "string",
+            "resources": "array",
+            "successMetrics": "array",
+            "contingency": "object"
+          }
+        }
+      ],
+      "dataSourceRequired": "planning-system",
+      "responseTime": "< 4 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:write"]
+    }
+  ]
+}

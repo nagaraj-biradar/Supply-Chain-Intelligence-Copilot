@@ -1,0 +1,207 @@
+{
+  "actions": [
+    {
+      "id": "search-supplier",
+      "name": "Search Supplier",
+      "description": "Find supplier by name, ID, or location",
+      "category": "supplier",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "searchTerm",
+          "type": "string",
+          "required": true,
+          "description": "Supplier name, ID, or location"
+        },
+        {
+          "name": "filters",
+          "type": "object",
+          "required": false,
+          "properties": {
+            "category": "string",
+            "country": "string",
+            "riskLevel": "enum",
+            "status": "enum"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "suppliers",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "supplierId": "string",
+              "name": "string",
+              "location": "string",
+              "category": "string",
+              "riskScore": "number",
+              "onTimePerformance": "number",
+              "qualityRating": "number"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": "erp",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["suppliers:read"]
+    },
+    {
+      "id": "get-supplier-details",
+      "name": "Get Supplier Details",
+      "description": "Retrieve detailed information about a specific supplier",
+      "category": "supplier",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "supplierId",
+          "type": "string",
+          "required": true,
+          "description": "Supplier ID"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "supplier",
+          "type": "object",
+          "properties": {
+            "supplierId": "string",
+            "name": "string",
+            "location": "object",
+            "contact": "object",
+            "performance": "object",
+            "financialHealth": "object",
+            "certifications": "array",
+            "riskAssessment": "object",
+            "contracts": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": "erp",
+      "responseTime": "< 1 second",
+      "requiresAuth": true,
+      "requiredPermissions": ["suppliers:read"]
+    },
+    {
+      "id": "calculate-supplier-risk-score",
+      "name": "Calculate Supplier Risk Score",
+      "description": "Calculate multi-factor risk score for a supplier",
+      "category": "supplier",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "supplierId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "riskFactors",
+          "type": "array",
+          "required": false,
+          "items": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "riskScore",
+          "type": "object",
+          "properties": {
+            "overallScore": "number",
+            "financialRisk": "number",
+            "qualityRisk": "number",
+            "deliveryRisk": "number",
+            "complianceRisk": "number",
+            "externalRisk": "number",
+            "riskLevel": "string",
+            "recommendations": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": ["erp", "financial-db", "external-risk-api"],
+      "mlModelRequired": "supplier-risk-v1",
+      "responseTime": "< 3 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["suppliers:read"]
+    },
+    {
+      "id": "compare-suppliers",
+      "name": "Compare Suppliers",
+      "description": "Compare performance of multiple suppliers for a category",
+      "category": "supplier",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "category",
+          "type": "string",
+          "required": true,
+          "description": "Product category"
+        },
+        {
+          "name": "metrics",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "default": ["quality", "onTimePerformance", "cost", "leadTime"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "comparison",
+          "type": "object",
+          "properties": {
+            "category": "string",
+            "suppliers": "array",
+            "metrics": "array",
+            "rankings": "array",
+            "recommendation": "object"
+          }
+        }
+      ],
+      "dataSourceRequired": "erp",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["suppliers:read"]
+    },
+    {
+      "id": "get-supplier-performance-trend",
+      "name": "Get Supplier Performance Trend",
+      "description": "Analyze performance trends for a supplier over time",
+      "category": "supplier",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "supplierId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "timeFrame",
+          "type": "string",
+          "required": false,
+          "default": "12 months",
+          "enum": ["3 months", "6 months", "12 months", "24 months"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "trend",
+          "type": "object",
+          "properties": {
+            "supplierId": "string",
+            "timeFrame": "string",
+            "metrics": "array",
+            "historicalData": "array",
+            "trend": "string",
+            "forecast": "object"
+          }
+        }
+      ],
+      "dataSourceRequired": "erp",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["suppliers:read"]
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "actions": [
+    {
+      "id": "get-inventory-level",
+      "name": "Get Inventory Level",
+      "description": "Get current inventory level for a product at a specific location",
+      "category": "inventory",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "sku",
+          "type": "string",
+          "required": true,
+          "description": "Product SKU"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Warehouse location (if not provided, shows all)"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "inventory",
+          "type": "object",
+          "properties": {
+            "sku": "string",
+            "productName": "string",
+            "currentLevel": "number",
+            "safetyStock": "number",
+            "reorderPoint": "number",
+            "maxStock": "number",
+            "locations": "array",
+            "status": "string",
+            "recommendations": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": "wms",
+      "responseTime": "< 1 second",
+      "requiresAuth": true,
+      "requiredPermissions": ["inventory:read"]
+    },
+    {
+      "id": "forecast-demand",
+      "name": "Forecast Demand",
+      "description": "Generate demand forecast for a product",
+      "category": "inventory",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "sku",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "forecastPeriod",
+          "type": "string",
+          "required": false,
+          "default": "30 days",
+          "enum": ["7 days", "30 days", "90 days", "180 days"]
+        },
+        {
+          "name": "confidenceLevel",
+          "type": "number",
+          "required": false,
+          "default": 0.95,
+          "min": 0.8,
+          "max": 0.99
+        }
+      ],
+      "outputs": [
+        {
+          "name": "forecast",
+          "type": "object",
+          "properties": {
+            "sku": "string",
+            "forecastPeriod": "string",
+            "baseForecast": "number",
+            "confidenceInterval": "object",
+            "seasonalityFactor": "number",
+            "trendDirection": "string",
+            "accuracy": "number",
+            "recommendations": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": "erp",
+      "mlModelRequired": "demand-forecast-v1",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "calculate-stockout-risk",
+      "name": "Calculate Stockout Risk",
+      "description": "Identify products at risk of stockout",
+      "category": "inventory",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "sku",
+          "type": "string",
+          "required": false,
+          "description": "Specific SKU or leave empty for all"
+        },
+        {
+          "name": "riskThreshold",
+          "type": "number",
+          "required": false,
+          "default": 0.3,
+          "description": "Risk probability threshold (0-1)"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "stockoutRisks",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": "string",
+              "productName": "string",
+              "riskProbability": "number",
+              "riskLevel": "string",
+              "daysUntilStockout": "number",
+              "currentInventory": "number",
+              "recommendedAction": "string",
+              "urgency": "string"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": ["wms", "erp"],
+      "mlModelRequired": "stockout-risk-v1",
+      "responseTime": "< 3 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "suggest-inventory-rebalancing",
+      "name": "Suggest Inventory Rebalancing",
+      "description": "Recommend inventory transfers between locations",
+      "category": "inventory",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "optimizationGoal",
+          "type": "string",
+          "required": false,
+          "default": "minimize-cost",
+          "enum": ["minimize-cost", "maximize-availability", "balanced"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "recommendations",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": "string",
+              "fromLocation": "string",
+              "toLocation": "string",
+              "quantity": "number",
+              "currentImbalance": "number",
+              "projectedBenefit": "string",
+              "priority": "string"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": ["wms", "erp"],
+      "responseTime": "< 5 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "identify-slow-moving-inventory",
+      "name": "Identify Slow-Moving Inventory",
+      "description": "Find products with low velocity and suggest actions",
+      "category": "inventory",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "velocityThreshold",
+          "type": "number",
+          "required": false,
+          "default": 10,
+          "description": "Units per month threshold"
+        },
+        {
+          "name": "ageThreshold",
+          "type": "number",
+          "required": false,
+          "default": 90,
+          "description": "Days in inventory threshold"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "slowMovingItems",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": "string",
+              "productName": "string",
+              "currentInventory": "number",
+              "monthlyVelocity": "number",
+              "daysInventory": "number",
+              "carryingCost": "number",
+              "currentValue": "number",
+              "recommendation": "string"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": ["wms", "erp"],
+      "responseTime": "< 4 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "actions": [
+    {
+      "id": "generate-kpi-dashboard",
+      "name": "Generate KPI Dashboard",
+      "description": "Generate supply chain KPI dashboard for selected date range",
+      "category": "analytics",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "timeframe",
+          "type": "string",
+          "required": false,
+          "default": "this-month",
+          "enum": [
+            "today",
+            "this-week",
+            "this-month",
+            "this-quarter",
+            "this-year",
+            "custom"
+          ]
+        },
+        {
+          "name": "metrics",
+          "type": "array",
+          "required": false,
+          "items": "string",
+          "default": [
+            "order-fulfillment-rate",
+            "on-time-delivery",
+            "supplier-quality",
+            "inventory-turn",
+            "cost-per-unit"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "dashboard",
+          "type": "object",
+          "properties": {
+            "timeframe": "string",
+            "generatedDate": "date",
+            "kpis": "array",
+            "trends": "object",
+            "benchmarks": "object",
+            "alerts": "array",
+            "recommendations": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": "data-warehouse",
+      "responseTime": "< 5 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "generate-report",
+      "name": "Generate Report",
+      "description": "Generate custom supply chain report",
+      "category": "analytics",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "reportType",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "supplier-performance",
+            "inventory-health",
+            "logistics-performance",
+            "risk-assessment",
+            "cost-analysis",
+            "custom"
+          ]
+        },
+        {
+          "name": "parameters",
+          "type": "object",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "report",
+          "type": "object",
+          "properties": {
+            "reportId": "string",
+            "title": "string",
+            "generatedDate": "date",
+            "format": "string",
+            "content": "object",
+            "downloadUrl": "string"
+          }
+        }
+      ],
+      "dataSourceRequired": "data-warehouse",
+      "responseTime": "< 10 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["reports:read"]
+    },
+    {
+      "id": "analyze-cost-trends",
+      "name": "Analyze Cost Trends",
+      "description": "Analyze procurement and logistics cost trends",
+      "category": "analytics",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "costCategory",
+          "type": "string",
+          "required": true,
+          "enum": ["procurement", "logistics", "inventory", "labor", "all"]
+        },
+        {
+          "name": "timeframe",
+          "type": "string",
+          "required": false,
+          "default": "12 months"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "costAnalysis",
+          "type": "object",
+          "properties": {
+            "category": "string",
+            "totalCost": "number",
+            "trend": "string",
+            "costByPeriod": "array",
+            "costByDriver": "array",
+            "benchmarks": "object",
+            "optimizationOpportunities": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": "data-warehouse",
+      "responseTime": "< 3 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "benchmark-performance",
+      "name": "Benchmark Performance",
+      "description": "Benchmark supply chain performance against industry standards",
+      "category": "analytics",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "metrics",
+          "type": "array",
+          "required": false,
+          "items": "string"
+        },
+        {
+          "name": "industry",
+          "type": "string",
+          "required": false,
+          "description": "Industry for benchmark comparison"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "benchmarkAnalysis",
+          "type": "object",
+          "properties": {
+            "company": "string",
+            "industry": "string",
+            "metrics": "array",
+            "comparison": "array",
+            "gaps": "array",
+            "recommendations": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": ["data-warehouse", "external-benchmark-data"],
+      "responseTime": "< 4 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["analytics:read"]
+    },
+    {
+      "id": "schedule-report-delivery",
+      "name": "Schedule Report Delivery",
+      "description": "Schedule automated report delivery",
+      "category": "analytics",
+      "priority": "P2",
+      "inputs": [
+        {
+          "name": "reportType",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "schedule",
+          "type": "string",
+          "required": true,
+          "enum": ["daily", "weekly", "bi-weekly", "monthly"]
+        },
+        {
+          "name": "recipients",
+          "type": "array",
+          "required": true,
+          "items": "string"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "scheduledReport",
+          "type": "object",
+          "properties": {
+            "scheduleId": "string",
+            "reportType": "string",
+            "schedule": "string",
+            "recipients": "array",
+            "status": "string",
+            "nextDelivery": "date"
+          }
+        }
+      ],
+      "dataSourceRequired": "scheduling-service",
+      "responseTime": "< 1 second",
+      "requiresAuth": true,
+      "requiredPermissions": ["reports:write"]
+    }
+  ]
+}

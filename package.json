@@ -1,0 +1,61 @@
+{
+  "name": "supply-chain-intelligence-copilot",
+  "version": "1.0.0",
+  "description": "AI-powered Supply Chain Intelligence Copilot for Microsoft 365 - featuring real-time visibility, predictive risk analysis, supplier intelligence, and optimization recommendations",
+  "main": "mcp-server.js",
+  "scripts": {
+    "start": "npm run start-all",
+    "start-all": "concurrently \"npm run start-mcp\" \"npm run start-ui\"",
+    "start-mcp": "node mcp-server.js",
+    "start-ui": "node ui-server.js",
+    "dev": "DEBUG=* npm run start-mcp",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:endpoints": "npm run test -- tests/endpoints.test.js",
+    "test:workflows": "npm run test -- tests/workflows.test.js",
+    "logs": "tail -f logs/mcp-server.log",
+    "logs:tail": "tail -f logs/mcp-server.log logs/copilot.log",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "validate-config": "node scripts/validate-config.js",
+    "export:inventory": "node scripts/export-data.js inventory",
+    "export:orders": "node scripts/export-data.js orders",
+    "export:suppliers": "node scripts/export-data.js suppliers",
+    "backup:data": "node scripts/backup-manager.js full",
+    "monitor": "node scripts/monitor.js",
+    "profile": "node --prof mcp-server.js",
+    "health-check": "curl -s http://localhost:3001/health | jq .",
+    "api-docs": "node scripts/generate-api-docs.js",
+    "setup": "npm install && npm run validate-config",
+    "clean": "rm -rf logs/* node_modules package-lock.json"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "concurrently": "^8.0.0",
+    "nodemon": "^3.0.0"
+  },
+  "keywords": [
+    "supply-chain",
+    "procurement",
+    "logistics",
+    "inventory-management",
+    "supplier-management",
+    "copilot-studio",
+    "microsoft-365",
+    "ai-agent",
+    "mcp-server"
+  ],
+  "author": "Enterprise Supply Chain Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/agentsleague"
+  }
+}

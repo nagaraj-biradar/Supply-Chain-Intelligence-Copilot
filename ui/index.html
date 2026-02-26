@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Supply Chain Intelligence — Deployment Plan Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Deployment Plan Viewer</h1>
+      <p class="subtitle">
+        Render and interact with DEPLOYMENT-PLAN.md (local server required)
+      </p>
+    </header>
+    <div class="layout">
+      <aside id="sidebar">
+        <div class="toc-box">
+          <h3>Table of Contents</h3>
+          <nav id="toc"></nav>
+        </div>
+        <div class="controls">
+          <button id="clear-checks">Clear Saved Checklist</button>
+          <a href="../DEPLOYMENT-PLAN.md" target="_blank">Open Raw Markdown</a>
+        </div>
+      </aside>
+
+      <main id="main">
+        <div id="content">Loading deployment plan…</div>
+      </main>
+    </div>
+
+    <footer>
+      <small
+        >Tip: Serve the repository root (python -m http.server) and open /ui/ in
+        your browser.</small
+      >
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

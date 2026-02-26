@@ -1,0 +1,600 @@
+[
+  {
+    "workflow_id": "wf-supplier-risk-assessment",
+    "workflow_name": "Supplier Risk Assessment",
+    "description": "Comprehensive supplier risk evaluation workflow",
+    "trigger": "user_request",
+    "trigger_phrases": [
+      "assess supplier risk",
+      "evaluate supplier",
+      "supplier performance check",
+      "quality audit",
+      "supplier reliability"
+    ],
+    "steps": [
+      {
+        "step_id": 1,
+        "name": "Collect Input",
+        "type": "input",
+        "description": "Gather supplier information",
+        "actions": [
+          {
+            "type": "ask_user",
+            "question": "Which supplier would you like to assess?",
+            "variable": "supplier_id"
+          }
+        ],
+        "next_step": 2
+      },
+      {
+        "step_id": 2,
+        "name": "Retrieve Supplier Data",
+        "type": "api_call",
+        "description": "Get supplier master data",
+        "api_call": {
+          "endpoint": "/api/suppliers/{supplier_id}",
+          "method": "GET"
+        },
+        "variable_map": "supplier_data",
+        "next_step": 3
+      },
+      {
+        "step_id": 3,
+        "name": "Analyze Risk Factors",
+        "type": "logic",
+        "description": "Evaluate multiple risk dimensions",
+        "logic": [
+          {
+            "name": "Quality Risk",
+            "calculation": "if supplier_data.quality_score < 8.0 then HIGH else LOW"
+          },
+          {
+            "name": "Delivery Risk",
+            "calculation": "if supplier_data.on_time_delivery_rate < 95.0 then HIGH else LOW"
+          },
+          {
+            "name": "Capacity Risk",
+            "calculation": "if supplier_data.capacity_utilization > 85 then MEDIUM else LOW"
+          },
+          {
+            "name": "Geopolitical Risk",
+            "calculation": "lookup supplier_data.country in risk_matrix"
+          }
+        ],
+        "variable_map": "risk_factors",
+        "next_step": 4
+      },
+      {
+        "step_id": 4,
+        "name": "Get Historical Risks",
+        "type": "api_call",
+        "description": "Retrieve past risk incidents",
+        "api_call": {
+          "endpoint": "/api/risks?supplierId={supplier_id}",
+          "method": "GET"
+        },
+        "variable_map": "risk_history",
+        "next_step": 5
+      },
+      {
+        "step_id": 5,
+        "name": "Calculate Risk Score",
+        "type": "logic",
+        "description": "Compute overall risk score (0-100)",
+        "logic": [
+          {
+            "name": "quality_weight",
+            "value": 0.3
+          },
+          {
+            "name": "delivery_weight",
+            "value": 0.35
+          },
+          {
+            "name": "capacity_weight",
+            "value": 0.15
+          },
+          {
+            "name": "geopolitical_weight",
+            "value": 0.2
+          }
+        ],
+        "variable_map": "overall_risk_score",
+        "next_step": 6
+      },
+      {
+        "step_id": 6,
+        "name": "Generate Recommendations",
+        "type": "logic",
+        "description": "Create action recommendations based on risk score",
+        "logic": [
+          {
+            "condition": "overall_risk_score > 70",
+            "action": "recommend_supplier_review"
+          },
+          {
+            "condition": "overall_risk_score > 50 AND overall_risk_score <= 70",
+            "action": "recommend_monitoring_plan"
+          },
+          {
+            "condition": "overall_risk_score <= 50",
+            "action": "recommend_maintain_relationship"
+          }
+        ],
+        "variable_map": "recommendations",
+        "next_step": 7
+      },
+      {
+        "step_id": 7,
+        "name": "Present Results",
+        "type": "output",
+        "description": "Display assessment results",
+        "response_template": "supplier_risk_assessment",
+        "data_to_include": [
+          "supplier_data",
+          "risk_factors",
+          "overall_risk_score",
+          "recommendations",
+          "risk_history"
+        ],
+        "next_step": null
+      }
+    ],
+    "error_handling": [
+      {
+        "error_type": "supplier_not_found",
+        "recovery_action": "ask_user_for_supplier_name"
+      },
+      {
+        "error_type": "api_timeout",
+        "recovery_action": "retry_with_fallback_data"
+      }
+    ],
+    "notifications": [
+      {
+        "trigger": "high_risk_detected",
+        "recipient": "procurement_manager",
+        "message": "High-risk supplier assessment completed"
+      }
+    ]
+  },
+
+  {
+    "workflow_id": "wf-inventory-optimization",
+    "workflow_name": "Inventory Optimization",
+    "description": "Identify and recommend inventory improvements",
+    "trigger": "scheduled",
+    "trigger_phrases": [
+      "optimize inventory",
+      "inventory analysis",
+      "stock optimization",
+      "reduce inventory costs",
+      "inventory review"
+    ],
+    "schedule": "daily_09:00,15:00",
+    "steps": [
+      {
+        "step_id": 1,
+        "name": "Define Optimization Scope",
+        "type": "input",
+        "description": "Determine what to optimize",
+        "actions": [
+          {
+            "type": "multiple_choice",
+            "question": "What do you want to optimize?",
+            "options": [
+              "slow-moving-items",
+              "high-value-items",
+              "critical-inventory",
+              "all"
+            ],
+            "variable": "optimization_scope"
+          }
+        ],
+        "next_step": 2
+      },
+      {
+        "step_id": 2,
+        "name": "Fetch Inventory Data",
+        "type": "api_call",
+        "description": "Retrieve complete inventory status",
+        "api_call": {
+          "endpoint": "/api/inventory?status=all",
+          "method": "GET"
+        },
+        "variable_map": "all_inventory",
+        "next_step": 3
+      },
+      {
+        "step_id": 3,
+        "name": "Filter by Scope",
+        "type": "logic",
+        "description": "Apply optimization scope filter",
+        "logic": [
+          {
+            "condition": "optimization_scope = 'slow-moving-items'",
+            "filter": "turnover_rate < 3.0"
+          },
+          {
+            "condition": "optimization_scope = 'high-value-items'",
+            "filter": "unit_cost > 50 AND total_value > 100000"
+          },
+          {
+            "condition": "optimization_scope = 'critical-inventory'",
+            "filter": "inventory_status = 'low' OR inventory_status = 'critical'"
+          }
+        ],
+        "variable_map": "filtered_inventory",
+        "next_step": 4
+      },
+      {
+        "step_id": 4,
+        "name": "Analyze Inventory Metrics",
+        "type": "logic",
+        "description": "Calculate key inventory metrics",
+        "logic": [
+          {
+            "name": "Days Inventory Outstanding (DIO)",
+            "calculation": "365 / turnover_rate"
+          },
+          {
+            "name": "Carrying Cost",
+            "calculation": "total_qty * unit_cost * 0.25"
+          },
+          {
+            "name": "Safety Stock Gap",
+            "calculation": "if current_qty < reorder_point then reorder_point - current_qty else 0"
+          },
+          {
+            "name": "Opportunity Cost",
+            "calculation": "total_value * 0.10"
+          }
+        ],
+        "variable_map": "inventory_metrics",
+        "next_step": 5
+      },
+      {
+        "step_id": 5,
+        "name": "Identify Optimization Opportunities",
+        "type": "logic",
+        "description": "Find items for optimization",
+        "logic": [
+          {
+            "condition": "turnover_rate < 2",
+            "recommendation": "type:reduction|reduction_percent:20-30|rationale:slow-moving"
+          },
+          {
+            "condition": "current_qty > reorder_point * 3",
+            "recommendation": "type:reduction|reduction_percent:15-25|rationale:excess-stock"
+          },
+          {
+            "condition": "current_qty < reorder_point * 1.1",
+            "recommendation": "type:increase|increase_percent:10-15|rationale:low-stock-risk"
+          }
+        ],
+        "variable_map": "optimization_opportunities",
+        "next_step": 6
+      },
+      {
+        "step_id": 6,
+        "name": "Calculate Impact",
+        "type": "logic",
+        "description": "Quantify potential savings and risks",
+        "logic": [
+          {
+            "name": "Potential Cash Release",
+            "calculation": "sum(reduction_opportunities * unit_cost)"
+          },
+          {
+            "name": "Annual Carrying Cost Savings",
+            "calculation": "sum(carrying_cost_reduction)"
+          },
+          {
+            "name": "Risk Score",
+            "calculation": "stockout_probability * demand_variability"
+          }
+        ],
+        "variable_map": "impact_analysis",
+        "next_step": 7
+      },
+      {
+        "step_id": 7,
+        "name": "Present Recommendations",
+        "type": "output",
+        "description": "Display optimization results",
+        "response_template": "inventory_optimization",
+        "data_to_include": [
+          "filtered_inventory",
+          "inventory_metrics",
+          "optimization_opportunities",
+          "impact_analysis"
+        ],
+        "next_step": null
+      }
+    ]
+  },
+
+  {
+    "workflow_id": "wf-order-tracking",
+    "workflow_name": "Order Tracking & Exception Management",
+    "description": "Track orders and manage delivery exceptions",
+    "trigger": "user_request",
+    "trigger_phrases": [
+      "track order",
+      "order status",
+      "where is my order",
+      "delivery status",
+      "shipment tracking"
+    ],
+    "steps": [
+      {
+        "step_id": 1,
+        "name": "Get Order Information",
+        "type": "input",
+        "description": "Identify order to track",
+        "actions": [
+          {
+            "type": "ask_user",
+            "question": "Enter order ID or customer name:",
+            "variable": "search_criteria"
+          }
+        ],
+        "next_step": 2
+      },
+      {
+        "step_id": 2,
+        "name": "Search Orders",
+        "type": "api_call",
+        "description": "Find matching orders",
+        "api_call": {
+          "endpoint": "/api/orders?customerId={search_criteria}",
+          "method": "GET"
+        },
+        "variable_map": "matching_orders",
+        "next_step": 3
+      },
+      {
+        "step_id": 3,
+        "name": "Retrieve Order Details",
+        "type": "api_call",
+        "description": "Get detailed order information",
+        "api_call": {
+          "endpoint": "/api/orders/{order_id}",
+          "method": "GET"
+        },
+        "variable_map": "order_details",
+        "next_step": 4
+      },
+      {
+        "step_id": 4,
+        "name": "Get Shipment Status",
+        "type": "api_call",
+        "description": "Retrieve shipment tracking info",
+        "api_call": {
+          "endpoint": "/api/shipments?orderId={order_id}",
+          "method": "GET"
+        },
+        "variable_map": "shipment_info",
+        "next_step": 5
+      },
+      {
+        "step_id": 5,
+        "name": "Detect Exceptions",
+        "type": "logic",
+        "description": "Identify delivery issues",
+        "logic": [
+          {
+            "condition": "order_details.estimated_delivery < today",
+            "exception": "delayed_delivery",
+            "severity": "high"
+          },
+          {
+            "condition": "order_details.status = 'pending' AND days_from_order > 5",
+            "exception": "processing_delay",
+            "severity": "medium"
+          },
+          {
+            "condition": "shipment_info.status_history includes 'exception'",
+            "exception": "shipment_issue",
+            "severity": "high"
+          }
+        ],
+        "variable_map": "exceptions_detected",
+        "next_step": 6
+      },
+      {
+        "step_id": 6,
+        "name": "Generate Action Plan",
+        "type": "logic",
+        "description": "Create mitigation actions",
+        "logic": [
+          {
+            "condition": "delayed_delivery AND delay_days > 7",
+            "action": "offer_expedited_partial_shipment"
+          },
+          {
+            "condition": "processing_delay",
+            "action": "escalate_to_operations"
+          },
+          {
+            "condition": "shipment_issue",
+            "action": "contact_carrier_for_update"
+          }
+        ],
+        "variable_map": "action_plan",
+        "next_step": 7
+      },
+      {
+        "step_id": 7,
+        "name": "Present Tracking",
+        "type": "output",
+        "description": "Display order tracking information",
+        "response_template": "order_tracking",
+        "data_to_include": [
+          "order_details",
+          "shipment_info",
+          "exceptions_detected",
+          "action_plan"
+        ],
+        "next_step": null
+      }
+    ]
+  },
+
+  {
+    "workflow_id": "wf-cost-optimization",
+    "workflow_name": "Cost Optimization Analysis",
+    "description": "Identify and quantify cost-saving opportunities",
+    "trigger": "user_request",
+    "trigger_phrases": [
+      "find cost savings",
+      "reduce procurement costs",
+      "cost optimization",
+      "savings opportunity",
+      "budget analysis"
+    ],
+    "steps": [
+      {
+        "step_id": 1,
+        "name": "Define Analysis Parameters",
+        "type": "input",
+        "description": "Set scope for cost analysis",
+        "actions": [
+          {
+            "type": "multiple_choice",
+            "question": "Which cost area would you like to optimize?",
+            "options": [
+              "supplier-consolidation",
+              "logistics",
+              "inventory-carrying",
+              "all"
+            ],
+            "variable": "analysis_scope"
+          },
+          {
+            "type": "multiple_choice",
+            "question": "What is your timeline?",
+            "options": ["immediate", "3-months", "6-months", "12-months"],
+            "variable": "implementation_timeline"
+          }
+        ],
+        "next_step": 2
+      },
+      {
+        "step_id": 2,
+        "name": "Collect Cost Data",
+        "type": "api_call",
+        "description": "Retrieve cost-related information",
+        "parallel_calls": [
+          {
+            "endpoint": "/api/suppliers",
+            "method": "GET",
+            "variable": "supplier_data"
+          },
+          {
+            "endpoint": "/api/inventory",
+            "method": "GET",
+            "variable": "inventory_data"
+          },
+          {
+            "endpoint": "/api/orders",
+            "method": "GET",
+            "variable": "order_data"
+          }
+        ],
+        "next_step": 3
+      },
+      {
+        "step_id": 3,
+        "name": "Fetch Cost Opportunities",
+        "type": "api_call",
+        "description": "Get pre-identified cost opportunities",
+        "api_call": {
+          "endpoint": "/api/cost-opportunities?type={analysis_scope}",
+          "method": "GET"
+        },
+        "variable_map": "cost_opportunities",
+        "next_step": 4
+      },
+      {
+        "step_id": 4,
+        "name": "Analyze Opportunities",
+        "type": "logic",
+        "description": "Evaluate each opportunity",
+        "logic": [
+          {
+            "name": "ROI Analysis",
+            "calculation": "(annual_savings - implementation_cost) / implementation_cost * 100"
+          },
+          {
+            "name": "Payback Period",
+            "calculation": "implementation_cost / monthly_savings"
+          },
+          {
+            "name": "Risk Assessment",
+            "calculation": "calculate_risk_score(opportunity_type, supplier_count, inventory_impact)"
+          }
+        ],
+        "variable_map": "opportunity_analysis",
+        "next_step": 5
+      },
+      {
+        "step_id": 5,
+        "name": "Prioritize Opportunities",
+        "type": "logic",
+        "description": "Rank by impact and feasibility",
+        "logic": [
+          {
+            "sort_field": "roi_percentage",
+            "sort_order": "descending"
+          },
+          {
+            "filter": "payback_period < implementation_timeline_months",
+            "priority": "quick_wins"
+          },
+          {
+            "filter": "risk_score < 30",
+            "priority": "low_risk"
+          }
+        ],
+        "variable_map": "prioritized_opportunities",
+        "next_step": 6
+      },
+      {
+        "step_id": 6,
+        "name": "Calculate Total Impact",
+        "type": "logic",
+        "description": "Aggregate savings across all opportunities",
+        "logic": [
+          {
+            "name": "Total Annual Savings",
+            "calculation": "sum(all_opportunities.annual_savings)"
+          },
+          {
+            "name": "Total Implementation Cost",
+            "calculation": "sum(all_opportunities.implementation_cost)"
+          },
+          {
+            "name": "Portfolio ROI",
+            "calculation": "(total_annual_savings - total_implementation_cost) / total_implementation_cost * 100"
+          }
+        ],
+        "variable_map": "total_impact",
+        "next_step": 7
+      },
+      {
+        "step_id": 7,
+        "name": "Present Analysis",
+        "type": "output",
+        "description": "Display cost optimization results",
+        "response_template": "cost_optimization_analysis",
+        "data_to_include": [
+          "prioritized_opportunities",
+          "opportunity_analysis",
+          "total_impact"
+        ],
+        "next_step": null
+      }
+    ]
+  }
+]

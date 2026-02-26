@@ -1,0 +1,192 @@
+{
+  "manifest": {
+    "copilotId": "supply-chain-intelligence-copilot",
+    "name": "Supply Chain Intelligence Copilot",
+    "displayName": "Supply Chain Intelligence",
+    "version": "1.0.0",
+    "description": "AI-powered assistant for procurement and logistics teams providing real-time visibility, predictive risk analysis, supplier insights, and optimization recommendations",
+    "publisher": "Enterprise Supply Chain Team",
+    "publisherContactEmail": "support@company.com",
+    "environment": {
+      "development": "dev",
+      "staging": "staging",
+      "production": "prod"
+    },
+    "authentication": {
+      "provider": "azure-ad",
+      "tenantId": "${AZURE_TENANT_ID}",
+      "clientId": "${AZURE_CLIENT_ID}",
+      "clientSecret": "${AZURE_CLIENT_SECRET}",
+      "redirectUri": "https://copilot.company.com/auth/callback",
+      "scopes": ["api://supply-chain-copilot/access", "offline_access"],
+      "mfaRequired": true,
+      "mfaForPrivilegedUsers": true
+    },
+    "capabilities": [
+      "real-time-visibility",
+      "predictive-analytics",
+      "supplier-intelligence",
+      "optimization-recommendations",
+      "automated-reporting",
+      "conversational-interface"
+    ],
+    "integrations": {
+      "dataSource": {
+        "erp": {
+          "provider": "multi",
+          "supported": ["sap", "oracle", "netsuite", "dynamics-365"]
+        },
+        "wms": {
+          "provider": "multi",
+          "supported": ["manhattan-associates", "blue-yonder", "infor"]
+        },
+        "oms": {
+          "provider": "multi",
+          "supported": ["salesforce", "shopify", "custom-api"]
+        },
+        "tms": {
+          "provider": "multi",
+          "supported": ["jda", "flexport", "fourkites", "carrier-apis"]
+        }
+      },
+      "externalServices": {
+        "weather": "openweathermap-api",
+        "news": "mediastack-api",
+        "currencyExchange": "exchangerate-api",
+        "commodities": "quandl-api"
+      }
+    },
+    "features": {
+      "stage1": {
+        "name": "Core Visibility",
+        "enabled": true,
+        "priority": "P0",
+        "features": [
+          {
+            "id": "order-tracking",
+            "name": "Order Tracking",
+            "enabled": true,
+            "dataSourcesRequired": ["oms", "tms"]
+          },
+          {
+            "id": "inventory-visibility",
+            "name": "Inventory Visibility",
+            "enabled": true,
+            "dataSourcesRequired": ["wms", "erp"]
+          },
+          {
+            "id": "shipment-tracking",
+            "name": "Shipment Tracking",
+            "enabled": true,
+            "dataSourcesRequired": ["tms"]
+          }
+        ]
+      },
+      "stage2": {
+        "name": "Predictive Analytics",
+        "enabled": true,
+        "priority": "P1",
+        "releaseDate": "2026-05-01",
+        "features": [
+          {
+            "id": "supplier-risk-scoring",
+            "name": "Supplier Risk Scoring",
+            "enabled": false,
+            "mlModelRequired": "supplier-risk-v1",
+            "releaseDate": "2026-05-15"
+          },
+          {
+            "id": "demand-forecasting",
+            "name": "Demand Forecasting",
+            "enabled": false,
+            "mlModelRequired": "demand-forecast-v1",
+            "releaseDate": "2026-05-10"
+          },
+          {
+            "id": "stockout-risk",
+            "name": "Stockout Risk Alert",
+            "enabled": false,
+            "mlModelRequired": "stockout-risk-v1",
+            "releaseDate": "2026-05-20"
+          }
+        ]
+      },
+      "stage3": {
+        "name": "Optimization",
+        "enabled": false,
+        "priority": "P2",
+        "releaseDate": "2026-09-01",
+        "features": [
+          {
+            "id": "procurement-optimization",
+            "name": "Procurement Optimization",
+            "enabled": false,
+            "releaseDate": "2026-09-15"
+          },
+          {
+            "id": "inventory-optimization",
+            "name": "Inventory Optimization",
+            "enabled": false,
+            "releaseDate": "2026-09-10"
+          },
+          {
+            "id": "logistics-optimization",
+            "name": "Logistics Optimization",
+            "enabled": false,
+            "releaseDate": "2026-09-20"
+          }
+        ]
+      }
+    },
+    "security": {
+      "dataClassifications": [
+        "public",
+        "internal",
+        "confidential",
+        "highly-confidential"
+      ],
+      "encryption": {
+        "inTransit": "tls-1.3",
+        "atRest": "aes-256",
+        "database": "tde-enabled"
+      },
+      "accessControl": {
+        "rbacEnabled": true,
+        "auditLoggingEnabled": true,
+        "anomalyDetectionEnabled": true,
+        "sessionTimeout": {
+          "default": 28800,
+          "privileged": 14400
+        }
+      },
+      "compliance": ["soc2-type2", "gdpr", "ccpa"]
+    },
+    "performance": {
+      "queryTimeout": 30000,
+      "reportGenerationTimeout": 120000,
+      "caching": {
+        "enabled": true,
+        "ttl": 3600,
+        "provider": "redis"
+      },
+      "scalability": {
+        "autoScale": true,
+        "minInstances": 3,
+        "maxInstances": 20,
+        "targetCpuUtilization": 70
+      }
+    },
+    "monitoring": {
+      "healthCheckInterval": 60000,
+      "metricsCollection": true,
+      "alertingEnabled": true,
+      "logRetention": 2592000,
+      "alertThresholds": {
+        "errorRate": 1.0,
+        "responseTime": 5000,
+        "cpuUtilization": 85,
+        "memoryUtilization": 85
+      }
+    }
+  }
+}

@@ -1,0 +1,939 @@
+{
+  "cards": {
+    "order-status-card": {
+      "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "type": "AdaptiveCard",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "accent",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Order Tracking",
+                      "weight": "bolder",
+                      "size": "large",
+                      "color": "light"
+                    }
+                  ]
+                },
+                {
+                  "width": "auto",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${order_status}",
+                      "weight": "bolder",
+                      "color": "light"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "separator": true,
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Order ID",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${order_id}",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Customer",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${customer_name}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Order Date",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${order_date}",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Est. Delivery",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${est_delivery_date}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Items",
+              "weight": "bolder",
+              "size": "medium"
+            },
+            {
+              "type": "Container",
+              "items": "${order_items}"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Carrier",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${carrier}",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Tracking",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${tracking_number}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Current Location: ${current_location}",
+              "size": "small",
+              "wrap": true
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "Track on Carrier Site",
+          "url": "${carrier_tracking_url}"
+        }
+      ]
+    },
+
+    "inventory-status-card": {
+      "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "type": "AdaptiveCard",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "accent",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Inventory Status",
+              "weight": "bolder",
+              "size": "large",
+              "color": "light"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "separator": true,
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "SKU",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${sku}",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Product Name",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${product_name}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Total Quantity",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${total_qty} units",
+                      "spacing": "none",
+                      "size": "medium",
+                      "weight": "bolder"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Status",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${inventory_status}",
+                      "spacing": "none",
+                      "size": "medium",
+                      "weight": "bolder",
+                      "color": "${status_color}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Warehouse Locations",
+              "weight": "bolder",
+              "size": "medium"
+            },
+            {
+              "type": "Container",
+              "items": "${warehouse_breakdown}"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Reorder Point",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${reorder_point} units",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Lead Time",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${lead_time} days",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Unit Cost",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${unit_cost}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    "supplier-risk-card": {
+      "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "type": "AdaptiveCard",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "accent",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Supplier Risk Assessment",
+                      "weight": "bolder",
+                      "size": "large",
+                      "color": "light"
+                    }
+                  ]
+                },
+                {
+                  "width": "auto",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${risk_level}",
+                      "weight": "bolder",
+                      "color": "light",
+                      "size": "medium"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "separator": true,
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Supplier",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${supplier_name}",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Country",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${country}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Performance Metrics",
+              "weight": "bolder",
+              "size": "medium",
+              "spacing": "medium"
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "On-Time Delivery",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${on_time_delivery}%",
+                      "spacing": "none",
+                      "size": "medium",
+                      "weight": "bolder"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Quality Score",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${quality_score}/10",
+                      "spacing": "none",
+                      "size": "medium",
+                      "weight": "bolder"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Lead Time",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${lead_time} days",
+                      "spacing": "none"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Certifications",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${certifications}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Risk Factors",
+              "weight": "bolder",
+              "size": "medium",
+              "spacing": "medium"
+            },
+            {
+              "type": "Container",
+              "items": "${risk_factors}"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Recommended Actions",
+              "weight": "bolder",
+              "size": "medium",
+              "spacing": "medium"
+            },
+            {
+              "type": "Container",
+              "items": "${recommendations}"
+            }
+          ]
+        }
+      ]
+    },
+
+    "cost-opportunity-card": {
+      "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "type": "AdaptiveCard",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "accent",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Cost Optimization Analysis",
+                      "weight": "bolder",
+                      "size": "large",
+                      "color": "light"
+                    }
+                  ]
+                },
+                {
+                  "width": "auto",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "${total_savings}",
+                      "weight": "bolder",
+                      "color": "light",
+                      "size": "medium"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "separator": true,
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Top Opportunities",
+              "weight": "bolder",
+              "size": "medium",
+              "spacing": "medium"
+            },
+            {
+              "type": "Container",
+              "items": "${opportunities_list}"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Summary Impact",
+              "weight": "bolder",
+              "size": "medium",
+              "spacing": "medium"
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Annual Savings",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${annual_savings}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder",
+                      "color": "good"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Implementation Cost",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${implementation_cost}",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "ROI",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${roi}%",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder",
+                      "color": "good"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Payback Period",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${payback_period} months",
+                      "spacing": "none"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    "metrics-card": {
+      "schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+      "type": "AdaptiveCard",
+      "version": "1.4",
+      "body": [
+        {
+          "type": "Container",
+          "style": "accent",
+          "body": [
+            {
+              "type": "TextBlock",
+              "text": "Supply Chain Metrics Dashboard",
+              "weight": "bolder",
+              "size": "large",
+              "color": "light"
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "separator": true,
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "On-Time Delivery",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${on_time_rate}%",
+                      "spacing": "none",
+                      "size": "extraLarge",
+                      "weight": "bolder"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Delayed Orders",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${delayed_orders}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Total Orders",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${total_orders}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Inventory Value",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${inventory_value}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "body": [
+            {
+              "type": "ColumnSet",
+              "columns": [
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Active Suppliers",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${active_suppliers}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder"
+                    }
+                  ]
+                },
+                {
+                  "width": "stretch",
+                  "items": [
+                    {
+                      "type": "TextBlock",
+                      "text": "High-Risk Suppliers",
+                      "weight": "bolder",
+                      "size": "small",
+                      "color": "accent"
+                    },
+                    {
+                      "type": "TextBlock",
+                      "text": "${high_risk_suppliers}",
+                      "spacing": "none",
+                      "size": "large",
+                      "weight": "bolder",
+                      "color": "warning"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

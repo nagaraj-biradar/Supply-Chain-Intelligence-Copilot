@@ -1,0 +1,193 @@
+{
+  "actions": [
+    {
+      "id": "search-order",
+      "name": "Search Order",
+      "description": "Find orders by order number, customer, date range, or status",
+      "category": "order",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "searchCriteria",
+          "type": "object",
+          "required": true,
+          "properties": {
+            "orderNumber": "string",
+            "customerId": "string",
+            "dateRange": "object",
+            "status": "string"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "orders",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "orderId": "string",
+              "orderNumber": "string",
+              "customerName": "string",
+              "orderDate": "date",
+              "totalValue": "number",
+              "status": "string",
+              "deliveryDate": "date",
+              "itemCount": "number"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": "oms",
+      "responseTime": "< 1 second",
+      "requiresAuth": true,
+      "requiredPermissions": ["orders:read"]
+    },
+    {
+      "id": "track-order",
+      "name": "Track Order",
+      "description": "Get detailed status and tracking information for an order",
+      "category": "order",
+      "priority": "P0",
+      "inputs": [
+        {
+          "name": "orderNumber",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "orderTracking",
+          "type": "object",
+          "properties": {
+            "orderId": "string",
+            "orderNumber": "string",
+            "status": "string",
+            "lineItems": "array",
+            "shipments": "array",
+            "currentLocation": "object",
+            "estimatedDelivery": "date",
+            "exceptions": "array",
+            "actions": "array"
+          }
+        }
+      ],
+      "dataSourceRequired": ["oms", "tms"],
+      "responseTime": "< 1 second",
+      "requiresAuth": true,
+      "requiredPermissions": ["orders:read"]
+    },
+    {
+      "id": "detect-order-exception",
+      "name": "Detect Order Exception",
+      "description": "Identify and analyze any exceptions in order fulfillment",
+      "category": "order",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "orderNumber",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "exception",
+          "type": "object",
+          "properties": {
+            "orderId": "string",
+            "hasException": "boolean",
+            "exceptionType": "string",
+            "severity": "string",
+            "rootCause": "string",
+            "customerImpact": "string",
+            "recommendations": "array",
+            "estimatedResolution": "date"
+          }
+        }
+      ],
+      "dataSourceRequired": ["oms", "tms", "wms"],
+      "mlModelRequired": "exception-detection-v1",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["orders:read"]
+    },
+    {
+      "id": "get-orders-by-supplier",
+      "name": "Get Orders by Supplier",
+      "description": "Retrieve all pending or active orders from a specific supplier",
+      "category": "order",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "supplierId",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "enum": ["all", "pending", "confirmed", "in-transit", "delivered"]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "supplierOrders",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "orderId": "string",
+              "orderNumber": "string",
+              "status": "string",
+              "items": "array",
+              "totalValue": "number",
+              "expectedDelivery": "date",
+              "onTimeRisk": "boolean"
+            }
+          }
+        }
+      ],
+      "dataSourceRequired": "oms",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["orders:read"]
+    },
+    {
+      "id": "estimate-order-delivery",
+      "name": "Estimate Order Delivery",
+      "description": "Calculate and predict order delivery date",
+      "category": "order",
+      "priority": "P1",
+      "inputs": [
+        {
+          "name": "orderNumber",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "deliveryEstimate",
+          "type": "object",
+          "properties": {
+            "orderId": "string",
+            "promisedDate": "date",
+            "estimatedDate": "date",
+            "confidenceLevel": "number",
+            "factors": "array",
+            "riskFactors": "array",
+            "recommendation": "string"
+          }
+        }
+      ],
+      "dataSourceRequired": ["oms", "tms"],
+      "mlModelRequired": "delivery-forecast-v1",
+      "responseTime": "< 2 seconds",
+      "requiresAuth": true,
+      "requiredPermissions": ["orders:read"]
+    }
+  ]
+}

@@ -1,0 +1,551 @@
+{
+  "schema_version": "1.0",
+  "agent": {
+    "id": "supply-chain-intelligence-agent",
+    "name": "Supply Chain Intelligence Copilot",
+    "displayName": "Supply Chain Intelligence",
+    "version": "1.0.0",
+    "description": "AI-powered assistant for supply chain operations providing real-time visibility, predictive risk analysis, supplier intelligence, and optimization recommendations",
+    "publisher": "Enterprise Supply Chain Team",
+    "icon": "https://assets.company.com/icons/supply-chain.svg",
+    "category": "Enterprise",
+    "tags": [
+      "supply-chain",
+      "procurement",
+      "logistics",
+      "inventory",
+      "supplier-management"
+    ],
+    "language": "en-US",
+
+    "system_prompt": "You are Supply Chain Intelligence Copilot, an AI assistant specialized in supply chain operations, procurement, and logistics. Your role is to:\n\n1. **Provide Real-Time Visibility**: Help users track orders, monitor inventory levels, and oversee shipments across global operations.\n\n2. **Identify and Mitigate Risks**: Analyze supplier performance, detect potential supply chain disruptions, and recommend preventive actions.\n\n3. **Optimize Operations**: Suggest inventory optimization strategies, consolidate orders, and recommend cost-saving opportunities.\n\n4. **Support Data-Driven Decisions**: Deliver actionable insights backed by current supply chain data and analytics.\n\nYou have access to real-time data on suppliers, inventory, orders, shipments, and performance metrics. When users ask questions, retrieve relevant data from the backend systems and present insights in clear, actionable formats.\n\nAlways strive for precision with data, explain assumptions, and escalate to human specialists for complex decisions.",
+
+    "capabilities": [
+      {
+        "id": "real-time-visibility",
+        "name": "Real-Time Visibility",
+        "description": "Track orders, inventory, and shipments in real-time",
+        "actions": [
+          "search-orders",
+          "track-shipment",
+          "get-inventory-levels",
+          "monitor-warehouse-status"
+        ]
+      },
+      {
+        "id": "risk-analysis",
+        "name": "Predictive Risk Analysis",
+        "description": "Identify and analyze potential supply chain disruptions",
+        "actions": [
+          "analyze-supplier-risk",
+          "detect-delivery-risks",
+          "assess-geopolitical-impact",
+          "predict-disruptions"
+        ]
+      },
+      {
+        "id": "supplier-intelligence",
+        "name": "Supplier Intelligence",
+        "description": "Monitor and analyze supplier performance",
+        "actions": [
+          "get-supplier-performance",
+          "compare-suppliers",
+          "review-quality-metrics",
+          "assess-supplier-capacity"
+        ]
+      },
+      {
+        "id": "optimization",
+        "name": "Optimization Recommendations",
+        "description": "Recommend cost and efficiency improvements",
+        "actions": [
+          "optimize-inventory",
+          "consolidate-orders",
+          "recommend-cost-savings",
+          "optimize-shipping-routes"
+        ]
+      },
+      {
+        "id": "reporting",
+        "name": "Reporting & Analytics",
+        "description": "Generate reports and analytical insights",
+        "actions": [
+          "generate-supply-chain-report",
+          "create-risk-dashboard",
+          "export-metrics",
+          "schedule-reports"
+        ]
+      }
+    ],
+
+    "knowledge_sources": [
+      {
+        "id": "supply-chain-docs",
+        "name": "Supply Chain Documentation",
+        "type": "documentation",
+        "description": "Internal supply chain process documentation and best practices",
+        "enabled": true
+      },
+      {
+        "id": "supplier-directory",
+        "name": "Supplier Directory",
+        "type": "data_source",
+        "description": "Active supplier list with performance metrics",
+        "enabled": true
+      },
+      {
+        "id": "inventory-system",
+        "name": "Inventory Management System",
+        "type": "system_integration",
+        "description": "Real-time inventory levels and warehouse status",
+        "enabled": true
+      }
+    ],
+
+    "integrations": [
+      {
+        "id": "mcp-server",
+        "name": "Supply Chain MCP Server",
+        "type": "mcp",
+        "endpoint": "http://localhost:3001",
+        "authentication": "none",
+        "description": "Access to supply chain data APIs",
+        "resources": [
+          {
+            "path": "/api/suppliers",
+            "method": "GET",
+            "description": "Get list of suppliers"
+          },
+          {
+            "path": "/api/inventory",
+            "method": "GET",
+            "description": "Get inventory status"
+          },
+          {
+            "path": "/api/orders",
+            "method": "GET",
+            "description": "Get orders"
+          },
+          {
+            "path": "/api/shipments",
+            "method": "GET",
+            "description": "Get shipments"
+          },
+          {
+            "path": "/api/risks",
+            "method": "GET",
+            "description": "Get risk analysis"
+          },
+          {
+            "path": "/api/cost-opportunities",
+            "method": "GET",
+            "description": "Get cost optimization opportunities"
+          },
+          {
+            "path": "/api/metrics",
+            "method": "GET",
+            "description": "Get supply chain metrics"
+          }
+        ]
+      }
+    ],
+
+    "topics": [
+      {
+        "id": "topic-order-tracking",
+        "name": "Order Tracking",
+        "description": "Help users track and manage orders",
+        "trigger_phrases": [
+          "track my order",
+          "where is order",
+          "order status",
+          "when will order arrive",
+          "order delivery",
+          "show my orders",
+          "list pending orders"
+        ],
+        "actions": ["search-orders", "track-shipment"],
+        "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-inventory",
+        "name": "Inventory Management",
+        "description": "Monitor and manage inventory levels",
+        "trigger_phrases": [
+          "inventory level",
+          "stock status",
+          "how much inventory",
+          "low stock alert",
+          "warehouse status",
+          "out of stock",
+          "reorder needed"
+        ],
+        "actions": ["get-inventory-levels", "optimize-inventory"],
+        "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-supplier-risk",
+        "name": "Supplier Risk Assessment",
+        "description": "Analyze supplier performance and risks",
+        "trigger_phrases": [
+          "supplier risk",
+          "supplier performance",
+          "supplier quality",
+          "on-time delivery",
+          "supplier issue",
+          "supplier assessment",
+          "supplier audit"
+        ],
+        "actions": ["analyze-supplier-risk", "get-supplier-performance"],
+        "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-cost-optimization",
+        "name": "Cost Optimization",
+        "description": "Identify cost-saving opportunities",
+        "trigger_phrases": [
+          "reduce costs",
+          "cost savings",
+          "optimize spending",
+          "save money",
+          "cost opportunity",
+          "budget impact",
+          "savings analysis"
+        ],
+        "actions": ["recommend-cost-savings", "consolidate-orders"],
+        "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-disruption-alert",
+        "name": "Disruption Alerts",
+        "description": "Monitor and alert on supply chain disruptions",
+        "trigger_phrases": [
+          "supply chain disruption",
+          "delivery delay",
+          "shortage alert",
+          "risk alert",
+          "critical issue",
+          "urgent action needed",
+          "escalate issue"
+        ],
+        "actions": ["predict-disruptions", "detect-delivery-risks"],
+        "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-reporting",
+        "name": "Reports & Analytics",
+        "description": "Generate reports and view analytics",
+        "trigger_phrases": [
+          "generate report",
+          "show metrics",
+          "analytics report",
+          "dashboard",
+          "performance report",
+          "export data",
+          "supply chain summary"
+        ],
+        "actions": ["generate-supply-chain-report", "create-risk-dashboard"],
+        "response_format": "adaptive_card"
+      }
+    ],
+
+    "actions": [
+      {
+        "id": "search-orders",
+        "name": "Search Orders",
+        "description": "Search and filter orders by status, customer, or date",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "processing",
+                "shipped",
+                "in-transit",
+                "delivered"
+              ],
+              "description": "Order status filter"
+            },
+            "customerId": {
+              "type": "string",
+              "description": "Filter by customer ID"
+            },
+            "delayedOnly": {
+              "type": "boolean",
+              "description": "Show only delayed orders"
+            },
+            "limit": {
+              "type": "integer",
+              "default": 10,
+              "description": "Number of results to return"
+            }
+          }
+        },
+        "endpoint": "/api/orders"
+      },
+      {
+        "id": "track-shipment",
+        "name": "Track Shipment",
+        "description": "Get detailed shipment tracking information",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "orderId": {
+              "type": "string",
+              "description": "Order ID to track"
+            },
+            "shipmentId": {
+              "type": "string",
+              "description": "Shipment ID to track"
+            }
+          },
+          "required": ["orderId"]
+        },
+        "endpoint": "/api/shipments"
+      },
+      {
+        "id": "get-inventory-levels",
+        "name": "Get Inventory Levels",
+        "description": "Check inventory levels by SKU or warehouse",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "Product SKU"
+            },
+            "warehouse": {
+              "type": "string",
+              "description": "Warehouse location"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["optimal", "low", "critical"],
+              "description": "Inventory status filter"
+            }
+          }
+        },
+        "endpoint": "/api/inventory"
+      },
+      {
+        "id": "analyze-supplier-risk",
+        "name": "Analyze Supplier Risk",
+        "description": "Analyze risk factors for specific suppliers",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "supplierId": {
+              "type": "string",
+              "description": "Supplier ID to analyze"
+            },
+            "riskLevel": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "Filter by risk level"
+            }
+          }
+        },
+        "endpoint": "/api/risks"
+      },
+      {
+        "id": "get-supplier-performance",
+        "name": "Get Supplier Performance",
+        "description": "Get performance metrics for suppliers",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "supplierId": {
+              "type": "string",
+              "description": "Supplier ID"
+            },
+            "metrics": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["quality", "delivery", "cost", "capacity"]
+              },
+              "description": "Metrics to retrieve"
+            }
+          }
+        },
+        "endpoint": "/api/suppliers"
+      },
+      {
+        "id": "optimize-inventory",
+        "name": "Optimize Inventory",
+        "description": "Get inventory optimization recommendations",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "focusArea": {
+              "type": "string",
+              "enum": ["slow-moving", "high-value", "critical"],
+              "description": "Area to focus optimization"
+            }
+          }
+        },
+        "endpoint": "/api/inventory"
+      },
+      {
+        "id": "recommend-cost-savings",
+        "name": "Recommend Cost Savings",
+        "description": "Get cost optimization recommendations",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "priority": {
+              "type": "string",
+              "enum": ["high", "medium", "low"],
+              "description": "Filter by priority"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["consolidation", "logistics", "inventory-optimization"],
+              "description": "Opportunity type"
+            }
+          }
+        },
+        "endpoint": "/api/cost-opportunities"
+      },
+      {
+        "id": "predict-disruptions",
+        "name": "Predict Disruptions",
+        "description": "Predict potential supply chain disruptions",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "timeframe": {
+              "type": "string",
+              "enum": ["immediate", "this-week", "this-month"],
+              "description": "Prediction timeframe"
+            }
+          }
+        },
+        "endpoint": "/api/risks"
+      },
+      {
+        "id": "generate-supply-chain-report",
+        "name": "Generate Supply Chain Report",
+        "description": "Generate comprehensive supply chain reports",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "reportType": {
+              "type": "string",
+              "enum": ["summary", "detailed", "executive"],
+              "description": "Type of report"
+            },
+            "timeframe": {
+              "type": "string",
+              "enum": ["weekly", "monthly", "quarterly"],
+              "description": "Report timeframe"
+            }
+          }
+        },
+        "endpoint": "/api/metrics"
+      }
+    ],
+
+    "authentication": {
+      "type": "azure-ad",
+      "required": true,
+      "scopes": ["api://supply-chain-copilot/access"],
+      "mfa_required": true
+    },
+
+    "permissions": [
+      {
+        "role": "procurement-manager",
+        "actions": [
+          "search-orders",
+          "track-shipment",
+          "get-inventory-levels",
+          "get-supplier-performance",
+          "optimize-inventory",
+          "recommend-cost-savings",
+          "analyze-supplier-risk",
+          "generate-supply-chain-report"
+        ],
+        "data_access": "all"
+      },
+      {
+        "role": "supply-chain-analyst",
+        "actions": [
+          "search-orders",
+          "get-inventory-levels",
+          "get-supplier-performance",
+          "optimize-inventory",
+          "recommend-cost-savings",
+          "analyze-supplier-risk",
+          "generate-supply-chain-report"
+        ],
+        "data_access": "all"
+      },
+      {
+        "role": "warehouse-manager",
+        "actions": ["get-inventory-levels", "search-orders", "track-shipment"],
+        "data_access": "warehouse-scoped"
+      },
+      {
+        "role": "logistics-coordinator",
+        "actions": ["track-shipment", "search-orders", "predict-disruptions"],
+        "data_access": "shipment-scoped"
+      },
+      {
+        "role": "executive",
+        "actions": [
+          "generate-supply-chain-report",
+          "get-supplier-performance",
+          "recommend-cost-savings"
+        ],
+        "data_access": "summary-only"
+      }
+    ],
+
+    "response_templates": {
+      "order_status": {
+        "type": "adaptive_card",
+        "template": "order-status-card.json"
+      },
+      "inventory_status": {
+        "type": "adaptive_card",
+        "template": "inventory-status-card.json"
+      },
+      "supplier_risk": {
+        "type": "adaptive_card",
+        "template": "supplier-risk-card.json"
+      },
+      "cost_opportunity": {
+        "type": "adaptive_card",
+        "template": "cost-opportunity-card.json"
+      },
+      "supply_chain_metrics": {
+        "type": "adaptive_card",
+        "template": "metrics-card.json"
+      }
+    },
+
+    "settings": {
+      "response_time_ms": 2000,
+      "enable_proactive_alerts": true,
+      "alert_threshold_delay_hours": 4,
+      "enable_cost_optimization_suggestions": true,
+      "enable_supplier_risk_monitoring": true,
+      "language_model": "gpt-4",
+      "temperature": 0.7,
+      "max_tokens": 2000,
+      "enable_conversation_history": true,
+      "conversation_history_days": 30
+    },
+
+    "analytics": {
+      "enabled": true,
+      "track_user_interactions": true,
+      "track_query_response_time": true,
+      "track_action_usage": true,
+      "privacy_mode": "pii-redacted"
+    }
+  }
+}
