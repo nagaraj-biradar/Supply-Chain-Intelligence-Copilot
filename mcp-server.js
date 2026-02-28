@@ -472,10 +472,19 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Headers": "Content-Type, x-api-key",
     });
     res.end();
     return;
+  }
+
+  // API key authentication (optional)
+  if (process.env.MCP_API_KEY && pathname !== "/health") {
+    const incomingKey = req.headers["x-api-key"];
+    if (incomingKey !== process.env.MCP_API_KEY) {
+      sendErrorResponse(res, 401, "Unauthorized: invalid or missing API key");
+      return;
+    }
   }
 
   // Suppliers endpoints
@@ -574,22 +583,35 @@ const server = http.createServer((req, res) => {
   sendErrorResponse(res, 404, "Endpoint not found");
 });
 
-server.listen(PORT, "localhost", () => {
-  console.log(`🚀 Supply Chain MCP Server running on http://localhost:${PORT}`);
-  console.log(`📊 Health check: http://localhost:${PORT}/health`);
-  console.log("");
-  console.log("Available endpoints:");
-  console.log("  GET  /api/suppliers              - List all suppliers");
-  console.log("  GET  /api/suppliers/:id          - Get supplier details");
-  console.log("  GET  /api/inventory              - List inventory");
-  console.log("  GET  /api/inventory/:sku         - Get SKU details");
-  console.log("  GET  /api/orders                 - List orders");
-  console.log("  GET  /api/orders/:id             - Get order details");
-  console.log("  GET  /api/shipments              - List shipments");
-  console.log("  GET  /api/risks                  - List supplier risks");
-  console.log("  GET  /api/cost-opportunities     - List cost opportunities");
-  console.log("  GET  /api/metrics                - Get supply chain metrics");
-});
+function startServer(port = PORT) {
+  return server.listen(port, "localhost", () => {
+    console.log(
+      `🚀 Supply Chain MCP Server running on http://localhost:${port}`,
+    );
+    console.log(`📊 Health check: http://localhost:${port}/health`);
+    console.log("");
+    console.log("Available endpoints:");
+    console.log("  GET  /api/suppliers              - List all suppliers");
+    console.log("  GET  /api/suppliers/:id          - Get supplier details");
+    console.log("  GET  /api/inventory              - List inventory");
+    console.log("  GET  /api/inventory/:sku         - Get SKU details");
+    console.log("  GET  /api/orders                 - List orders");
+    console.log("  GET  /api/orders/:id             - Get order details");
+    console.log("  GET  /api/shipments              - List shipments");
+    console.log("  GET  /api/risks                  - List supplier risks");
+    console.log("  GET  /api/cost-opportunities     - List cost opportunities");
+    console.log(
+      "  GET  /api/metrics                - Get supply chain metrics",
+    );
+  });
+}
+
+// If run directly from node, start the server. Otherwise export for tests
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = { startServer, server, SupplyChainDataService };
 
 process.on("SIGINT", () => {
   console.log("\n🛑 Shutting down MCP server...");

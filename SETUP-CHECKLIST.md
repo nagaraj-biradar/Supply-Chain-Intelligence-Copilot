@@ -1,8 +1,8 @@
 # Copilot Studio Setup - Step-by-Step Checklist
 
 **Complete Implementation Checklist**  
-**Date Started**: ****\_\_\_****  
-**Completed**: ****\_\_\_****
+**Date Started**: \***\*\_\_\_\*\***  
+**Completed**: \***\*\_\_\_\*\***
 
 ---
 
@@ -59,6 +59,13 @@ npm run start-mcp
 ---
 
 ## Phase 2: Copilot Studio Agent Setup (5 minutes)
+
+### 🧪 Run tests and secure the MCP
+
+- [ ] Install dependencies (`npm install`)
+- [ ] Run `npm test` to verify API endpoints and workflow logic
+- [ ] (optional) Set `MCP_API_KEY` environment variable for secure calls
+- [ ] Update Copilot Studio integration to send `x-api-key` header if using API key
 
 ### ✅ Access Copilot Studio
 
@@ -496,9 +503,9 @@ Once everything is working:
 
 **Implementation Status**:
 
-- Start Date: ****\_\_\_****
-- Completion Date: ****\_\_\_****
+- Start Date: \***\*\_\_\_\*\***
+- Completion Date: \***\*\_\_\_\*\***
 - Ready for Production: [ ] Yes [ ] No
 
-**Prepared By**: ****\_\_\_****  
-**Reviewed By**: ****\_\_\_****
+**Prepared By**: \***\*\_\_\_\*\***  
+**Reviewed By**: \***\*\_\_\_\*\***

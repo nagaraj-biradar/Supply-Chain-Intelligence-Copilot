@@ -108,8 +108,9 @@
         "name": "Supply Chain MCP Server",
         "type": "mcp",
         "endpoint": "http://localhost:3001",
-        "authentication": "none",
-        "description": "Access to supply chain data APIs",
+        "authentication": "api_key",
+        "api_key_header": "x-api-key",
+        "description": "Access to supply chain data APIs (requires API key set in MCP_API_KEY)",
         "resources": [
           {
             "path": "/api/suppliers",
@@ -162,7 +163,9 @@
           "when will order arrive",
           "order delivery",
           "show my orders",
-          "list pending orders"
+          "list pending orders",
+          "help",
+          "I need help with orders"
         ],
         "actions": ["search-orders", "track-shipment"],
         "response_format": "adaptive_card"
@@ -178,7 +181,9 @@
           "low stock alert",
           "warehouse status",
           "out of stock",
-          "reorder needed"
+          "reorder needed",
+          "help",
+          "assist with inventory"
         ],
         "actions": ["get-inventory-levels", "optimize-inventory"],
         "response_format": "adaptive_card"
@@ -194,7 +199,8 @@
           "on-time delivery",
           "supplier issue",
           "supplier assessment",
-          "supplier audit"
+          "supplier audit",
+          "help"
         ],
         "actions": ["analyze-supplier-risk", "get-supplier-performance"],
         "response_format": "adaptive_card"
@@ -246,6 +252,20 @@
         ],
         "actions": ["generate-supply-chain-report", "create-risk-dashboard"],
         "response_format": "adaptive_card"
+      },
+      {
+        "id": "topic-general-help",
+        "name": "General Help",
+        "description": "Fallback when user needs guidance or isn’t sure what to ask",
+        "trigger_phrases": [
+          "help",
+          "what can you do",
+          "I need assistance",
+          "how do I use this",
+          "show me options"
+        ],
+        "actions": [],
+        "response_format": "text"
       }
     ],
 

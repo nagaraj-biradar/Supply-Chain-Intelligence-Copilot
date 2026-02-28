@@ -35,6 +35,23 @@
 
     // build a small table of contents
     const toc = document.getElementById("toc");
+
+    // add a simple health check demo button
+    const demo = document.getElementById("demo");
+    if (demo) {
+      const btn = document.createElement("button");
+      btn.textContent = "Ping MCP Health";
+      btn.addEventListener("click", async () => {
+        try {
+          const res = await fetch("http://localhost:3001/health");
+          const json = await res.json();
+          alert("MCP health: " + JSON.stringify(json));
+        } catch (err) {
+          alert("Failed to reach MCP: " + err.message);
+        }
+      });
+      demo.appendChild(btn);
+    }
     const headings = content.querySelectorAll("h1, h2, h3");
     headings.forEach((h) => {
       const id = h.textContent

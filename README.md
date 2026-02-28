@@ -41,6 +41,12 @@ npm run start
 
 ### 3. Connect to Copilot Studio
 
+### 3.1 Run the Mock MCP Server & Tests 🧪
+
+The repository now includes a basic test suite using **Jest**. Install dependencies and run `npm test` to validate the server endpoints and workflow utilities.
+
+Authentication is optional but supported; set the environment variable `MCP_API_KEY` before starting the server and supply the same value in a `x-api-key` header when Copilot Studio invokes the MCP endpoints.
+
 1. Go to: https://copilotstudio.microsoft.com/
 2. Create new agent → Follow setup guide below
 3. Set MCP endpoint: `http://localhost:3001`
@@ -63,6 +69,7 @@ This index helps you find exactly what you need:
 | ------------------------------------------------------------------ | ----------------------------------------------------------- | ------ |
 | **[IMPLEMENTATION-INDEX.md](./IMPLEMENTATION-INDEX.md)**           | 📍 **Master navigation guide** - Start here for orientation | 5 min  |
 | **[COPILOT-STUDIO-SETUP.md](./COPILOT-STUDIO-SETUP.md)**           | ⭐ Complete step-by-step Copilot Studio configuration       | 45 min |
+| **Tests**                                                          | 🧪 Run `npm test` to exercise API endpoints and risk logic  | 5 min  |
 | **[SETUP-CHECKLIST.md](./SETUP-CHECKLIST.md)**                     | ✅ Actionable checklist for implementation (print friendly) | 30 min |
 | **[QUICK-REFERENCE.md](./QUICK-REFERENCE.md)**                     | Quick lookup reference for parameters and IDs               | 1 min  |
 | **[QUICKSTART.md](./QUICKSTART.md)**                               | Quick 5-minute setup and test scenarios                     | 5 min  |

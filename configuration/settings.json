@@ -79,19 +79,19 @@
         "trendAnalysis": true
       },
       "demandForecasting": {
-        "enabled": false,
+        "enabled": true,
         "confidenceIntervals": true,
         "seasonalityFactors": true,
         "modelVersion": "prophet-v1"
       },
       "costAnalysis": {
-        "enabled": false,
+        "enabled": true,
         "procurementAnalysis": true,
         "logisticsAnalysis": true,
         "inventoryCostCalculation": true
       },
       "riskAssessment": {
-        "enabled": false,
+        "enabled": true,
         "supplierFinancialRisk": true,
         "supplyDisruptionRisk": true,
         "qualityRisk": true
@@ -122,25 +122,25 @@
     "analytics": {
       "mlModels": {
         "demandForecasting": {
-          "enabled": false,
+          "enabled": true,
           "version": "v1.0",
           "accuracy": 0.92,
           "retrainFrequency": "monthly"
         },
         "supplierRiskScoring": {
-          "enabled": false,
+          "enabled": true,
           "version": "v1.0",
           "accuracy": 0.88,
           "retrainFrequency": "quarterly"
         },
         "stockoutPrediction": {
-          "enabled": false,
+          "enabled": true,
           "version": "v1.0",
           "accuracy": 0.85,
           "retrainFrequency": "monthly"
         },
         "exceptionDetection": {
-          "enabled": false,
+          "enabled": true,
           "version": "v1.0",
           "accuracy": 0.9,
           "retrainFrequency": "monthly"
