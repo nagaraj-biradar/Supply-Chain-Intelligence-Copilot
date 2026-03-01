@@ -473,7 +473,4 @@ Your Supply Chain Intelligence Copilot is **ready for deployment**.
 
 ---
 
-**Created by**: Enterprise Supply Chain Team  
-**Last Updated**: February 25, 2026  
-**License**: MIT  
-**Repository**: https://github.com/microsoft/agentsleague
+

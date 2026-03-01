@@ -281,6 +281,8 @@ Topics define how the agent responds to user queries. Each topic has:
 
    ```
    Use Adaptive Card template: order-status-card.json
+   (the template is defined inside `ui/adaptive-cards.json` under the
+   `order-status-card` key; you can extract it as a separate file if desired)
    Map fields:
      - orderId → orderData.orderId
      - status → orderData.status
