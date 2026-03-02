@@ -12,6 +12,48 @@
 
 ---
 
+## Architecture
+
+          ┌─────────────────────────────────────────────────────────────┐
+          │              Microsoft 365 / Copilot Studio                 │
+          │                                                              │
+          │  ┌──────────────────────────────────────────────────────┐  │
+          │  │         Supply Chain Intelligence Agent              │  │
+          │  │  ┌──────────────────────────────────────────────┐   │  │
+          │  │  │  • Topic Routing                             │   │  │
+          │  │  │  • Natural Language Understanding            │   │  │
+          │  │  │  • Conversational Logic                      │   │  │
+          │  │  │  • Response Formatting                       │   │  │
+          │  │  └──────────────────────────────────────────────┘   │  │
+          │  └──────────────────────────────────────────────────────┘  │
+          │                           │                                  │
+          │                           │ HTTP/REST                        │
+          ├───────────────────────────┼──────────────────────────────────┤
+          │                           │                                  │
+          │          MCP Server (Node.js)                               │
+          │  ┌──────────────────────────────────────────────────────┐  │
+          │  │  • Order Management API                             │  │
+          │  │  • Inventory Management API                         │  │
+          │  │  • Supplier Management API                          │  │
+          │  │  • Shipment Tracking API                            │  │
+          │  │  • Risk Analysis API                                │  │
+          │  │  • Cost Optimization API                            │  │
+          │  │  • Metrics & Reporting API                          │  │
+          │  └──────────────────────────────────────────────────────┘  │
+          │                           │                                  │
+          └───────────────────────────┼──────────────────────────────────┘
+                                     │
+                        ┌────────────┴────────────┐
+                        │                         │
+                ┌───────▼────────┐      ┌────────▼──────┐
+                │  Mock Database │      │  Real Systems │
+                │                │      │  (Enterprise) │
+                │ • Orders       │      │  • ERP        │
+                │ • Inventory    │      │  • WMS        │
+                │ • Suppliers    │      │  • OMS        │
+                │ • Shipments    │      │  • TMS        │
+                └────────────────┘      └───────────────┘
+
 ## ⚡ Quick Start (5 Minutes)
 
 ### 1. Start the Application
